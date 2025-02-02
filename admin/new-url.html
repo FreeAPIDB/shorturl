@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Short URL</title>
+  <link rel="stylesheet" href="/admin/style.css">
+</head>
+<body>
+  <header>
+    <h1>Create New Short URL</h1>
+  </header>
+  <section>
+    <form id="url-form">
+      <label for="url">Enter URL:</label>
+      <input type="url" id="url" name="url" required />
+      <button type="submit">Shorten URL</button>
+    </form>
+    <p id="result"></p>
+  </section>
+  <script>
+    const form = document.getElementById('url-form');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const url = document.getElementById('url').value;
+      const response = await fetch('/api/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      });
+      const data = await response.json();
+      if (data.shortUrl) {
+        document.getElementById('result').textContent = `Shortened URL: ${window.location.origin}/${data.shortUrl}`;
+      } else {
+        document.getElementById('result').textContent = `Error: ${data.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
