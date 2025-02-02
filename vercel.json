@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "admin/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/shorten",
+      "dest": "/api/shorten.js"
+    },
+    {
+      "src": "/api/manage",
+      "dest": "/api/manage.js"
+    },
+    {
+      "src": "/api/redirect",
+      "dest": "/api/redirect.js"
+    },
+    {
+      "src": "/admin/(.*)",
+      "dest": "/admin/$1"
+    }
+  ]
+}
